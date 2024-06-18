@@ -9,7 +9,7 @@ export function closeModal(modal) {
     modal.classList.add('popup_is-animated');
     modal.classList.remove('popup_is-opened');
     modal.removeEventListener('click', closeModalOverlay);
-    document.removeEventListener('keydown', closeModalOverlay);
+    document.removeEventListener('keydown', closeModalEsc);
 }
 
 function closeModalEsc (evt) {
