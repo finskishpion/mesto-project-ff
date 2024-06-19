@@ -1,11 +1,11 @@
 import './pages/index.css';
 import { initialCards } from './components/cards.js';
-import { cardSection, createCard, deleteCard } from './components/card.js';
+import { cardSection, createCard, deleteCard, hendleLikeCard} from './components/card.js';
 import { openModal, closeModal } from './components/modal.js';
 
 
 // @todo: Вывести карточки на страницу
-initialCards.forEach(element => cardSection.append(createCard(element, deleteCard, openModalImage)));
+initialCards.forEach(element => cardSection.append(createCard(element, deleteCard, openModalImage, hendleLikeCard)));
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonNewCard = document.querySelector('.profile__add-button');
@@ -17,12 +17,12 @@ const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const modalImageLink = document.querySelector('.popup__image');
 const modalImageName = document.querySelector('.popup__caption');
-const formElement = document.querySelector('.popup__form');
-const nameInput = formElement.querySelector('.popup__input_type_name');
-const jobInput = formElement.querySelector('.popup__input_type_description');
-const forNewCard = document.forms.new_place;
-const newCardName = forNewCard.elements.place_name;
-const newCardLink = forNewCard.elements.link;
+const formEditProfile = document.forms.edit_profile;
+const nameInput = formEditProfile.elements.name;
+const jobInput = formEditProfile.elements.description;
+const formNewCard = document.forms.new_place;
+const newCardName = formNewCard.elements.place_name;
+const newCardLink = formNewCard.elements.link;
 
 
 //открытие формы профиля
@@ -52,14 +52,14 @@ closeModalbuttons.forEach((item) => {
 });
 
 // обработчик «отправки» формы профиля
-function handleFormSubmit(evt) {
+function handleFormEditProfileSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closeModal(modalProfile);
 }
 
-formElement.addEventListener('submit', handleFormSubmit);
+formEditProfile.addEventListener('submit', handleFormEditProfileSubmit);
 
 //добавление карточки
 function addCard(evt) {
@@ -67,11 +67,12 @@ function addCard(evt) {
   const newCard = createCard(
     {name: newCardName.value, link: newCardLink.value},
     deleteCard,
-    openModalImage
+    openModalImage,
+    hendleLikeCard
   );
   cardSection.prepend(newCard);
-  forNewCard.reset();
+  formNewCard.reset();
   closeModal(modalNewCard);
 }
 
-forNewCard.addEventListener('submit', addCard);
+formNewCard.addEventListener('submit', addCard);
